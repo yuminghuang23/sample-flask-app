@@ -1,0 +1,74 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  AppName:
+    Type: String
+    Description: name of Application
+  S3BucketName:
+    Type: String
+    Description: name of s3 bucket
+  S3FileName:
+    Type: String
+    Description: name of zip folder in s3 bucket
+
+Resources:
+
+  SampleWebApp:
+    Type: AWS::ElasticBeanstalk::Application
+    Properties: 
+      ApplicationName: !Sub '${AppName}-app'
+      Description: ElasticBeanstalk sample web app using docker 
+  
+  SampleWebAppVersion:
+    Type: AWS::ElasticBeanstalk::ApplicationVersion
+    Properties: 
+      ApplicationName: !Ref SampleWebApp
+      Description: ElasticBeanstalk sample web app version
+      SourceBundle: 
+        S3Bucket: !Sub '${S3BucketName}-${AWS::Region}'
+        S3Key: sample-web-app.zip
+
+  SampleWebAppConfigurationTemplate:
+    Type: AWS::ElasticBeanstalk::ConfigurationTemplate
+    Properties: 
+      ApplicationName: !Ref SampleWebApp
+      Description: ElasticBeanstalk sample web app configuration
+      PlatformArn: String
+      SolutionStackName: '64bit Amazon Linux 2 v3.4.5 running Docker'
+  
+  SampleWebAppEnviornment:
+    Type: AWS::ElasticBeanstalk::Environment
+    Properties: 
+      ApplicationName: !Ref SampleWebApp
+      Description: ElasticBeanstalk sample web app enviornment
+      TemplateName: !Ref SampleWebAppConfigurationTemplate
+      VersionLabel: !Ref SampleWebAppVersion
+
+  SampleWebAppRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Description: Beanstalk EC2 role
+      ManagedPolicyArns: 
+        - arn:aws:iam::aws:policy/AWSElasticBeanstalkWebTier
+        - arn:aws:iam::aws:policy/AWSElasticBeanstalkMulticontainerDocker
+        - arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier
+
+  SampleWebAppProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties: 
+      Roles:
+        - !Ref MyInstanceRole
+
+
+
+
+  
+
