@@ -22,9 +22,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: unit test
-        run: make test
-
       - name: validate cloudformation templates
         run: make valid-cf
 
@@ -36,4 +33,4 @@ jobs:
 
       - name: deploy elasticbeanstalk cf
         run: make deploy-elasticbean-stalk-cf
-        
+

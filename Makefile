@@ -14,8 +14,8 @@ run-local:
 	docker run -p 8090:8090 ${APP_NAME}
 
 valid-cf:
-	aws cloudformation validate-template --template-body file://cloudformation/${WEB_APP_TEMPLATE_NAME}.cf.yaml
-	aws cloudformation validate-template --template-body file://cloudformation/${S3_TEMPLATE_NAME}.cf.yaml
+	aws cloudformation validate-template --region ap-southeast-2 --template-body file://cloudformation/${WEB_APP_TEMPLATE_NAME}.cf.yaml
+	aws cloudformation validate-template --region ap-southeast-2 --template-body file://cloudformation/${S3_TEMPLATE_NAME}.cf.yaml
 
 deploy-s3-cf:
 	aws cloudformation deploy \
