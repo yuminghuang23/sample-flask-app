@@ -1,6 +1,6 @@
-[![Build Status](https://github.com/yuminghuang23/sample-flask-app/actions/workflows/deploy.yaml/badge.svg)
+![Build Status](https://github.com/yuminghuang23/sample-flask-app/actions/workflows/deploy.yaml/badge.svg)
 
-# EasyCRM
+# Sample Flask App 
 Sample flask web app deployed to AWS Elastic Bean Stalk with CICD pipeline
 
 **Originally Created by [Chris Hall](www.chrishall.io)**
