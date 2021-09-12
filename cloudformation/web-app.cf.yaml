@@ -25,14 +25,26 @@ Resources:
       Description: ElasticBeanstalk sample web app version
       SourceBundle: 
         S3Bucket: !Sub '${S3BucketName}-${AWS::Region}'
-        S3Key: sample-web-app.zip
+        S3Key: !Sub '${S3FileName}.zip'
 
   SampleWebAppConfigurationTemplate:
     Type: AWS::ElasticBeanstalk::ConfigurationTemplate
     Properties: 
       ApplicationName: !Ref SampleWebApp
       Description: ElasticBeanstalk sample web app configuration
-      PlatformArn: String
+      OptionSettings:
+      - Namespace: aws:autoscaling:asg
+        OptionName: MinSize
+        Value: '2'
+      - Namespace: aws:autoscaling:asg
+        OptionName: MaxSize
+        Value: '6'
+      - Namespace: aws:elasticbeanstalk:environment
+        OptionName: EnvironmentType
+        Value: LoadBalanced
+      - Namespace: aws:autoscaling:launchconfiguration
+        OptionName: IamInstanceProfile
+        Value: !Ref SampleWebAppInstanceProfile 
       SolutionStackName: '64bit Amazon Linux 2 v3.4.5 running Docker'
   
   SampleWebAppEnviornment:
@@ -61,11 +73,11 @@ Resources:
         - arn:aws:iam::aws:policy/AWSElasticBeanstalkMulticontainerDocker
         - arn:aws:iam::aws:policy/AWSElasticBeanstalkWorkerTier
 
-  SampleWebAppProfile:
+  SampleWebAppInstanceProfile:
     Type: AWS::IAM::InstanceProfile
     Properties: 
       Roles:
-        - !Ref MyInstanceRole
+        - !Ref SampleWebAppRole
 
 
 
