@@ -7,6 +7,9 @@ S3_BUCKET_PATH=sample-elastic-beanstalk-bucket-ap-southeast-2
 build:
 	docker build -t ${APP_NAME} .
 
+test: build
+	docker run -e CI=true ${APP_NAME} nosetests -v
+
 run-local:
 	docker run -p 8090:8090 ${APP_NAME}
 
