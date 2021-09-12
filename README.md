@@ -1,13 +1,11 @@
-[![Build Status](https://travis-ci.org/cghall/EasyCRM.svg?branch=master)](https://travis-ci.org/cghall/EasyCRM)
+[![Build Status](https://github.com/yuminghuang23/sample-flask-app/actions/workflows/deploy.yaml/badge.svg)
 
 # EasyCRM
-
-An open source Customer Relationship Management system powered by Flask and SQLAlchemy.
-add by shuaishuai
+Sample flask web app deployed to AWS Elastic Bean Stalk with CICD pipeline
 
 **Originally Created by [Chris Hall](www.chrishall.io)**
 
-**Modified by Yu**
+**Modified by Yuming**
 
 # Prerequisite
 
@@ -16,11 +14,11 @@ add by shuaishuai
 # Build and Run
 
 ```
-docker build -t easycrm .
+make build 
 ```
 
 ```
-docker run -p 8090:8090 easycrm
+make run-local
 ```
 
 Now you can access http://0.0.0.0:8090/login/ with Username and Password: test@gmail.com/shh
@@ -57,27 +55,4 @@ core -> controller
 - run.py ...... Run the App from here
 ```
 
-# DevOps Ideas
 
-1. Fork and separate the branch to master(dev), staging, prod
-2. Improve the Travis(Github)/Pipeline(Bitbucket) for build, test and deploy to AWS EC2
-3. Dockerise the app and build, test and deploy via Docker
-4. Set up statsd, prometheus and grafana for monitoring
-5. Add code to probe certain endpoints for monitoring the reliability, traffic and latency
-6. Use a load tester to test the performance and monitor it. Point out the problems
-7. Set up a CDN and Application Load Balancer
-8. Use Terraform for monitor/infra set up
-
-## Advanced
-
-1. Separate the database, core logic and auth into multiple microservices
-2. Generate 10000 DB entries
-3. Add an external cache to load entries faster
-4. Introduce autoscaling via EBS
-
-## Other
-
-1. Write a better frontend code in a different repo
-2. Setup deployment for the frontend to S3
-3. Point CloudFront to the S3
-4. Use Terraform to do the deployment
